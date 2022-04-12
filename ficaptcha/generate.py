@@ -30,11 +30,11 @@ class Captcha():
 
         for c in cls:
             ca = os.listdir(f"{self.image_dir}/{c}")
-            class_i.append([c, f"{self.image_dir}/{c}/{ca[0]}"])
-        
+            for p in ca:
+                class_i.append([c, f"{self.image_dir}/{c}/{p}"])
         t = random.choice(class_i)
 
-        bg = Image.new('RGB', self.size, self.background_color)
+        bg = Image.new('RGBA', self.size, self.background_color)
 
         if self.noise_bg:
             bg = noise(bg, random.uniform(0.001, 1.0))
@@ -48,7 +48,7 @@ class Captcha():
             else:
                 isp.append(v[0])
                 v = Image.open(v[1])
-                v = v.resize((random.randint(70, 180), random.randint(70, 180)))
+                v = v.resize((random.randint(40, 100), random.randint(40, 100)))
 
                 if self.rotate_im:
                     v = v.rotate(random.randint(-360, 360), expand=True)
@@ -61,7 +61,12 @@ class Captcha():
         one = random.randint(10, self.size[0] - 100)
         two = random.randint(10, self.size[1] - 100)
         r = Image.open(t[1])
-        r = r.resize((random.randint(70, 180), random.randint(70, 180)))
+        r = r.resize((random.randint(40, 100), random.randint(40, 100)))
+        if self.rotate_im:
+            r = r.rotate(random.randint(-360, 360), expand=True)
+
+        if self.noise_im:
+            r = noise(r, random.uniform(0.001, 0.05))
         bg.paste(r, (one, two))
         
         self.captcha = bg

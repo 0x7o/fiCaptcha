@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
 	name="ficaptcha",
-	version="1.0.0",
+	version="1.0.3",
 	author="Danil Kononyuk",
 	author_email="me@0x7o.link",
 	description="Simple captcha",

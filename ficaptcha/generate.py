@@ -1,4 +1,6 @@
 import os
+import base64
+import io
 import numpy as np
 import random
 from PIL import Image
@@ -54,7 +56,7 @@ class Captcha():
                     v = v.rotate(random.randint(-360, 360), expand=True)
 
                 if self.noise_im:
-                    v = noise(v, random.uniform(0.001, 0.05))
+                    v = noise(v, random.uniform(0.001, 0.1))
             
                 bg.paste(v, (random.randint(10, self.size[0] - 100), random.randint(10, self.size[1] - 100)))
             
@@ -66,46 +68,24 @@ class Captcha():
             r = r.rotate(random.randint(-360, 360), expand=True)
 
         if self.noise_im:
-            r = noise(r, random.uniform(0.001, 0.05))
+            r = noise(r, random.uniform(0.001, 0.1))
         bg.paste(r, (one, two))
         
         self.captcha = bg
 
         return {"class": t[0], "file": t[1], "position": (one, two)}
 
-    def save(self, path):
+    def save(self, path: str, mode: str = None):
         if self.captcha != None:
-            self.captcha.save(path)
-
-"""
-    
-def add_salt_and_pepper(image, amount):
-    output = np.copy(np.array(image))
-
-    # add salt
-    nb_salt = np.ceil(amount * output.size * 0.5)
-    coords = [np.random.randint(0, i - 1, int(nb_salt)) for i in output.shape]
-    output[coords] = 1
-
-    # add pepper
-    nb_pepper = np.ceil(amount* output.size * 0.5)
-    coords = [np.random.randint(0, i - 1, int(nb_pepper)) for i in output.shape]
-    output[coords] = 0
-
-    return Image.fromarray(output)
-
-def p(image):
-    image = image.resize((random.randint(70, 180), random.randint(70, 180)))
-    image = image.rotate(random.randint(-360, 360))
-    return add_salt_and_pepper(image, random.uniform(0.001, 0.05))
-
-bg = Image.new('RGB', (512, 512), 'grey')
-
-v = Image.open("1.jpeg")
-v = p(v)
-bg = add_salt_and_pepper(bg, random.uniform(0.0, 1.0))
-for i in range(5):
-    bg.paste(p(v), (random.randint(1, 500), random.randint(1, 500)))
-bg.save("2.png")
-
-"""
+            if mode == None:
+                self.captcha.save(path)
+                return 1
+            elif mode == "base64":
+                im_file = io.BytesIO()
+                self.captcha.save(im_file, format="PNG")
+                im_bytes = im_file.getvalue() 
+                with open(path, 'ab') as p:
+                    p.write(base64.b64encode(im_bytes))
+                return 1
+            else:
+                raise ValueError('The "mode" parameter is exclusively None or "base64"')

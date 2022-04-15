@@ -1,5 +1,6 @@
 import os
 import pyttsx3
+import uuid
 
 class Captcha():
     def __init__(self,
@@ -18,26 +19,31 @@ class Captcha():
                               {'num': 7, 'text': 'семь'},
                               {'num': 8, 'text': 'восемь'},
                               {'num': 9, 'text': 'девять'},],
-                cache_dir: str = "c",
-                lang: str = "ru"):
+                audio_dir: str = "",
+                lang: str = "ru",
+                audio_synthesis: bool = False):
         
         self.bitrate = bitrate
         self.count = count
         self.noise_bg = noise_bg
         self.noise_dir = noise_dir
         self.random_speed = random_speed
-        self.cache_dir = cache_dir
+        self.audio_dir = audio_dir
+        self.audio_synthesis = audio_synthesis
         self.dict = dict
         self.captcha = None
 
-        if not os.path.exists(self.cache_dir):
-            os.makedirs(self.cache_dir)
+        if self.audio_synthesis:
+            if not os.path.exists(self.audio_dir):
+                os.makedirs(self.audio_dir)
 
-        engine = pyttsx3.init()
-        engine.setProperty('voice', lang) 
-        for d in dict:
-            engine.save_to_file(f"{d['text']}", f"{self.cache_dir}/{d['num']}.wav")
-            engine.runAndWait()
+            engine = pyttsx3.init()
+            engine.setProperty('voice', lang) 
+            for d in dict:
+                if not os.path.exists(f"{self.audio_dir}/{d['num']}"):
+                    os.makedirs(f"{self.audio_dir}/{d['num']}")
+                engine.save_to_file(f"{d['text']}", f"{self.audio_dir}/{d['num']}/{str(uuid.uuid4())}.wav")
+                engine.runAndWait()
 
     def generate(self):
         ...

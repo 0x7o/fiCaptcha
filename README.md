@@ -28,8 +28,10 @@ Create a folder with images for captcha:
 │       └── ...
 ```
 Import the library and create a class
-Params:
-- ```dfg``` -fg
+- ```size=(256, 256)``` - Captcha size in pixels
+- ```image_dir="images"``` - Image folder for captcha
+- ```background_color="white"``` - Background Color
+- ```noise_bg=True``` - Background Color
 ```python
 
 ```

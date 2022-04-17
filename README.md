@@ -27,3 +27,9 @@ Create a folder with images for captcha:
 │       ├── fox2.png
 │       └── ...
 ```
+Import the library and create a class
+Params:
+- ```dfg``` -fg
+```python
+
+```

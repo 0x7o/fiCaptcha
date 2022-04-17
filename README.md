@@ -19,7 +19,7 @@ Image Captcha
 Create a folder with images for captcha:
 * images
   * toy
-   * toy1.png
+   * * toy1.png
    * toy2.png
    * ...
   * fox

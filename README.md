@@ -9,7 +9,7 @@ cd fiCaptcha
 pip install .
 ```
 
-pip install
+Python pip install
 ```
 pip install ficaptcha
 ```

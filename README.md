@@ -46,5 +46,5 @@ result = c.generate()
 print(result)
 ```
 ```bash
-{'class': 'кубик', 'file': 'images/кубик/i (68).jpg', 'position': (17, 139)}
+{'class': 'toy', 'file': 'images/toy/toy5.png', 'position': (17, 139)}
 ```

@@ -18,4 +18,12 @@ Image Captcha
 
 Create a folder with images for captcha:
 * images
-  * Hello 
+  * toy
+   * toy1.png
+   * toy2.png
+   * ...
+  * fox
+   * fox1.png
+   * fox2.png
+   * ...
+  * ... 

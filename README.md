@@ -40,3 +40,11 @@ from ficaptcha.image import Captcha
 
 c = Captcha(size=(256, 256), image_dir="images", rotate_im=False)
 ```
+Let's generate our captcha
+```python
+result = c.generate()
+print(result)
+```
+```json
+{'class': 'кубик', 'file': 'images/кубик/i (68).jpg', 'position': (17, 139)}
+```

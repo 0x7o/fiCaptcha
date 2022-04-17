@@ -45,6 +45,6 @@ Let's generate our captcha
 result = c.generate()
 print(result)
 ```
-```json
+```bash
 {'class': 'кубик', 'file': 'images/кубик/i (68).jpg', 'position': (17, 139)}
 ```

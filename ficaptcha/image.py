@@ -6,6 +6,12 @@ import random
 from PIL import Image
 
 def noise(image, amount):
+    '''
+    Adds noise to an image.
+    :param image: The image to add noise to.
+    :param amount: The amount of noise to add to the image.
+    :return: The image with noise added to it.
+    '''
     output = np.copy(np.array(image))
 
     nb_salt = np.ceil(amount * output.size * 0.5)
@@ -29,6 +35,18 @@ class Captcha():
                 count_images: int = 5,
                 maxH: list = [70, 80],
                 maxW: list = [70, 80],):
+        '''
+        Initializes the parameters for the captcha.
+        :param size: The size of the image.
+        :param image_dir: The directory where the images are stored.
+        :param background_color: The background color of the image.
+        :param noise_bg: Whether to add noise to the background.
+        :param noise_im: Whether to add noise to the images.
+        :param rotate_im: Whether to rotate the images.
+        :param count_images: The number of images to be generated.
+        :param maxH: The maximum height of the images.
+        :param maxW: The maximum width of the images.
+        '''
         self.image_dir = image_dir
         self.size = size
         self.background_color = background_color
@@ -42,9 +60,12 @@ class Captcha():
 
 
     def generate(self):
+        '''
+        Generates a captcha image.
+        :return: A dictionary containing the class of the image, the file name, and the position of the image.
+        '''
         cls = os.listdir(self.image_dir)
         class_i = []
-        cache = []
 
         for c in cls:
             ca = os.listdir(f"{self.image_dir}/{c}")
@@ -92,6 +113,12 @@ class Captcha():
         return {"class": t[0], "file": t[1], "position": (one, two)}
 
     def save(self, path: str, mode: str = None):
+        '''
+        Saves the captcha to a file.
+        :param path: The path to the file.
+        :param mode: The mode in which the file is to be saved.
+        :return: 1 if the file is saved successfully, 0 otherwise.
+        '''
         if self.captcha != None:
             if mode == None:
                 self.captcha.save(path)

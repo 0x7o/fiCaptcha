@@ -6,6 +6,12 @@ from pydub import AudioSegment
 import uuid
 
 def audio_plus_audio(infiles, outfile):
+    '''
+    This function takes in a list of files and adds them together to form a single file.
+    :param infiles: A list of files to be added together.
+    :param outfile: The file to which the output is to be written.
+    :return: The name of the file to which the output is written.
+    '''
     data = []
     for infile in infiles:
         w = wave.open(infile, 'rb')
@@ -20,6 +26,14 @@ def audio_plus_audio(infiles, outfile):
     return outfile
 
 def noise_aud(audio, noise, out, rate):
+    '''
+    Adds noise to an audio file.
+    :param audio: The audio file.
+    :param noise: The noise file.
+    :param out: The output file.
+    :param rate: The frame rate of the audio file.
+    :return: The output file.
+    '''
     audio1 = AudioSegment.from_file(audio, frame_rate=rate)
     noise1 = AudioSegment.from_file(noise, frame_rate=rate)
 
@@ -49,6 +63,18 @@ class Captcha():
                 lang: str = "ru",
                 audio_synthesis: bool = False):
         
+        '''
+        Initializes the class with the given parameters.
+        :param rate: The sampling rate of the audio.
+        :param count: The number of digits in the captcha.
+        :param noise_bg: Whether to add background noise or not.
+        :param noise_dir: The directory containing the background noise.
+        :param tmp_dir: The directory to store temporary files.
+        :param dict: The dictionary containing the mapping of numbers to words.
+        :param audio_dir: The directory to store the audio files.
+        :param audio_synthesis: Whether to generate audio files or not.
+        '''
+
         self.rate = rate
         self.count = count
         self.noise_bg = noise_bg
@@ -75,6 +101,10 @@ class Captcha():
                 engine.runAndWait()
 
     def generate(self):
+        '''
+        Generates a random captcha from the dictionary of possible characters.
+        :return: A dictionary containing the captcha and its corresponding string.
+        '''
         captchs = []
         for u in range(self.count):
             captchs.append(random.choice(self.dict)['num'])
@@ -105,6 +135,12 @@ class Captcha():
         return {'num': res}
 
     def save(self, path, format):
+        '''
+        Saves the captcha as a wav file.
+        :param path: The path where the file is to be saved.
+        :param format: The format of the file to be saved.
+        :return: The path where the file is saved.
+        '''
         sound = AudioSegment.from_file(self.captcha, frame_rate=self.rate)
         sound.export(path, format=format)
         
